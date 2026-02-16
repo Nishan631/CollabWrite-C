@@ -1,4 +1,4 @@
-**CollabWrite-C**
+# CollabWrite-C
 
 Real-Time Collaborative Text Editor in C (LAN-Based)
 
@@ -7,7 +7,14 @@ It demonstrates how modern collaborative systems (like Google Docs) work interna
 
 This project focuses on systems-level programming, distributed synchronization, and efficient data structure design, making it suitable for educational, experimental, and research purposes.
 
- **Features**
+The project demonstrates the practical use of:
+- **Linked Lists** → for dynamic text buffer management  
+- **Stacks** → for Undo/Redo functionality  
+- **Trees** → for versioning and branching (snapshot storage)  
+- **Threads & Mutexes** → for concurrent client handling  
+- **Sockets (TCP/IP)** → for real-time networking and synchronization  
+
+ # Features
 
 1.Multi-user real-time editing over TCP (LAN)
 
@@ -27,7 +34,7 @@ This project focuses on systems-level programming, distributed synchronization, 
 
 9.Modular architecture with separation of concerns
 
- **Architecture Overview**
+ # Architecture Overview
 
 CollabWrite-C follows a layered architecture:
 
@@ -46,7 +53,19 @@ Data Structure Layer
  ├── text_buffer.c / text_buffer.h
  └── trie_suggest.c / trie_suggest.h
 
-**Execution Flow**
+ # Supported Commands :-
+
+1. INS <pos> <text>	Insert text at given position
+2. DEL <pos> <len>	Delete a specific number of characters
+3. UNDO	Undo the last operation
+4. REDO	Redo the last undone operation
+5. SNAP	Create a snapshot (version save)
+6. LIST_VERSIONS	Show all saved versions in a tree structure
+7. RESTORE <id>	Restore the document to a specific snapshot version
+8. GET	Retrieve and print the current document
+9. QUIT	Disconnect from the server
+
+# Execution Flow
 
 Server initializes socket and listens for connections.
 
@@ -64,7 +83,24 @@ Broadcasts changes to all connected clients
 
 Clients update their local buffers accordingly.
 
-**Core Concepts Implemented**
+# Example Workflow :-
+Client 1: INS 0 Hello
+
+Client 2: INS 5 World
+
+Both see → Hello World
+
+Client 1: DEL 5 6 → Text becomes Hello
+
+Client 2: UNDO → Restores Hello World
+
+Client 1: SNAP → Saves version v1
+
+Client 2: LIST_VERSIONS → Displays snapshot tree
+
+Client 1: RESTORE 1 → Restores version v1
+
+# Core Concepts Implemented
 
 1️⃣ Operational Transformation (OT)
 
@@ -86,7 +122,7 @@ Implements prefix-based word suggestion using a trie data structure.
 
 Server handles multiple clients concurrently using POSIX threads and synchronization primitives.
 
-**Technologies Used**
+# Technologies Used
 
 C (C99)
 
@@ -100,7 +136,7 @@ Custom Data Structures (Linked Lists, Stacks, Tries)
 
 Makefile Build System
 
-📂 **Project Structure**
+# Project Structure
 collabwrite-c/
 │
 ├── Makefile
@@ -115,7 +151,7 @@ collabwrite-c/
 │   └── words.txt
 └── .vscode/
 
-**Build Instructions (Linux/macOS)**
+# Build Instructions (Linux/macOS)
 
 1️⃣ Clone Repository
 git clone <repository_url>
@@ -138,6 +174,7 @@ client
 
 To simulate collaboration, run multiple client instances.
 
+
 **Windows Support**
 
 To run on Windows:
@@ -152,6 +189,7 @@ Initialize Winsock using WSAStartup()
 
 Future improvements include cross-platform abstraction for sockets and threading.
 
+
 **Example Use Case**
 
 Multiple users on the same LAN connect to the server.
@@ -162,7 +200,7 @@ Server resolves concurrency using OT.
 
 All clients remain consistent in real time.
 
-**Future Improvements**
+# Future Improvements
 
 Vector clocks for causal consistency
 
@@ -177,6 +215,7 @@ ncurses-based terminal UI
 Performance benchmarking under concurrent load
 
 Cross-platform abstraction layer (Linux + Windows)
+
 
 
 This project bridges theoretical computer science concepts (DSA, concurrency, distributed systems) with practical systems programming.
